@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= title %></title>
+  <link href="/css/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 p-6">
+
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-2xl font-bold"><%= title %></h1>
+
+      <a href="/transaksi/create" class="px-4 py-2 bg-blue-600 text-white rounded">
+        + Transaksi Baru
+      </a>
+    </div>
+
+    <table class="w-full border">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="p-2 border">ID</th>
+          <th class="p-2 border">Tanggal</th>
+          <th class="p-2 border">Total</th>
+          <th class="p-2 border">Bayar</th>
+          <th class="p-2 border">Kembalian</th>
+          <th class="p-2 border w-32">Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% transaksi.forEach(t => { %>
+          <tr>
+            <td class="border p-2"><%= t.id %></td>
+            <td class="border p-2"><%= new Date(t.tanggal).toLocaleString() %></td>
+            <td class="border p-2">Rp <%= t.total.toLocaleString('id-ID') %></td>
+            <td class="border p-2">Rp <%= t.bayar.toLocaleString('id-ID') %></td>
+            <td class="border p-2">Rp <%= t.kembalian.toLocaleString('id-ID') %></td>
+
+            <td class="border p-2 text-center">
+              <a href="/transaksi/detail/<%= t.id %>" class="px-2 py-1 bg-green-600 text-white rounded">
+                Detail
+              </a>
+            </td>
+          </tr>
+        <% }) %>
+        </tbody>
+
+    </table>
+    <div class="flex justify-center mt-4 space-x-2">
+
+  <% if (page > 1) { %>
+    <a href="/transaksi?page=<%= page - 1 %>" 
+       class="px-4 py-2 bg-gray-300 rounded">
+      Previous
+    </a>
+  <% } %>
+
+  <% for (let i = 1; i <= totalPage; i++) { %>
+    <a href="/transaksi?page=<%= i %>"
+       class="px-4 py-2 <%= page == i ? 'bg-blue-600 text-white' : 'bg-gray-200' %> rounded">
+      <%= i %>
+    </a>
+  <% } %>
+
+  <% if (page < totalPage) { %>
+    <a href="/transaksi?page=<%= page + 1 %>"
+       class="px-4 py-2 bg-gray-300 rounded">
+      Next
+    </a>
+  <% } %>
+
+</div>
+
+  </div>
+
+</body>
+</html>

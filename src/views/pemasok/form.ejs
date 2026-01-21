@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link href="/css/output.css" rel="stylesheet">
+</head>
+<body class="p-6 bg-gray-100">
+
+  <div class="max-w-lg mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4"><%= title %></h1>
+
+    <form action="<%= action %>" method="POST" class="space-y-4">
+
+      <input name="nama_supplier" value="<%= pemasok.nama_supplier || '' %>"
+        class="w-full p-2 border rounded" placeholder="Nama Supplier" required>
+
+      <input name="no_telp" value="<%= pemasok.no_telp || '' %>"
+        class="w-full p-2 border rounded" placeholder="No Telepon" required>
+
+      <textarea name="alamat" class="w-full p-2 border rounded" placeholder="Alamat"><%= pemasok.alamat || '' %></textarea>
+
+      <input name="keterangan" value="<%= pemasok.keterangan || '' %>"
+        class="w-full p-2 border rounded" placeholder="Keterangan">
+
+      <button class="w-full py-2 bg-blue-600 text-white rounded">
+        Simpan
+      </button>
+
+    </form>
+  </div>
+
+</body>
+</html>

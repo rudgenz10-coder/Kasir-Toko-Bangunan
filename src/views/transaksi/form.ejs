@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= title %></title>
+  <link href="/css/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 p-6">
+
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+
+    <h1 class="text-2xl font-bold mb-4"><%= title %></h1>
+
+    <form id="formTrx" action="/transaksi/store" method="POST" class="space-y-4">
+
+      <!-- TABEL ITEM -->
+      <table class="w-full border mb-4" id="tableItems">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="p-2 border">Barang</th>
+            <th class="p-2 border">Harga</th>
+            <th class="p-2 border">Jumlah</th>
+            <th class="p-2 border">Subtotal</th>
+            <th class="p-2 border w-20">#</th>
+          </tr>
+        </thead>
+
+        <tbody id="items"></tbody>
+      </table>
+
+      <button id="btnAdd" type="button" class="px-4 py-2 bg-blue-600 text-white rounded">
+        + Tambah Barang
+      </button>
+
+      <!-- TOTAL -->
+      <div class="text-right text-xl font-bold mt-4">
+        Total: Rp <span id="totalDisplay">0</span>
+      </div>
+
+      <input type="hidden" name="total" id="totalInput">
+
+      <!-- BAYAR & KEMBALIAN -->
+      <div class="grid grid-cols-2 gap-4 mt-4">
+
+        <div>
+          <label>Bayar</label>
+          <input type="number" name="bayar" id="bayar" class="p-2 border w-full rounded">
+        </div>
+
+        <div>
+          <label>Kembalian</label>
+          <input type="number" name="kembalian" id="kembalian" class="p-2 border w-full rounded" readonly>
+        </div>
+
+      </div>
+
+      <button class="w-full mt-4 py-2 bg-green-600 text-white rounded">
+        Simpan Transaksi
+      </button>
+    </form>
+
+  </div>
+
+  <!-- BARANG UNTUK DROPDOWN (DATA DARI SERVER) -->
+  <script>
+    const barangList = <%- JSON.stringify(barang) %>;
+  </script>
+
+  <!-- SCRIPT FORM DINAMIS -->
+  <script>
+    const itemsContainer = document.getElementById("items");
+    const totalDisplay = document.getElementById("totalDisplay");
+    const totalInput = document.getElementById("totalInput");
+    const bayar = document.getElementById("bayar");
+    const kembalian = document.getElementById("kembalian");
+
+    document.getElementById("btnAdd").addEventListener("click", addItem);
+
+    function addItem() {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td class="border p-2">
+          <select name="kode_barang[]" class="barangSelect w-full p-1 border rounded" required>
+            <option value="">-- pilih --</option>
+            ${barangList
+              .map(
+                b => `<option value="${b.kode}" data-harga="${b.harga_barang}">
+                        ${b.nama_barang}
+                      </option>`
+              )
+              .join("")}
+          </select>
+        </td>
+
+        <td class="border p-2">
+          <input type="number" name="harga[]" class="harga p-1 border rounded w-full" readonly>
+        </td>
+
+        <td class="border p-2">
+          <input type="number" name="jumlah[]" class="jumlah p-1 border rounded w-full" min="1" value="1">
+        </td>
+
+        <td class="border p-2">
+          <input type="number" name="subtotal[]" class="subtotal p-1 border rounded w-full" readonly>
+        </td>
+
+        <td class="border p-2 text-center">
+          <button type="button" class="hapus bg-red-500 text-white px-2 py-1 rounded">X</button>
+        </td>
+      `;
+
+      itemsContainer.appendChild(row);
+      refreshEvents();
+    }
+
+    function refreshEvents() {
+      document.querySelectorAll(".barangSelect").forEach(sel => {
+        sel.onchange = function () {
+          const harga = this.selectedOptions[0].dataset.harga;
+          const row = this.closest("tr");
+          row.querySelector(".harga").value = harga;
+          hitungRow(row);
+        };
+      });
+
+      document.querySelectorAll(".jumlah").forEach(input => {
+        input.oninput = function () {
+          hitungRow(this.closest("tr"));
+        };
+      });
+
+      document.querySelectorAll(".hapus").forEach(btn => {
+        btn.onclick = function () {
+          this.closest("tr").remove();
+          hitungTotal();
+        };
+      });
+    }
+
+    function hitungRow(row) {
+      const harga = Number(row.querySelector(".harga").value);
+      const jumlah = Number(row.querySelector(".jumlah").value);
+
+      row.querySelector(".subtotal").value = harga * jumlah;
+
+      hitungTotal();
+    }
+
+    function hitungTotal() {
+      let total = 0;
+
+      document.querySelectorAll(".subtotal").forEach(s => total += Number(s.value));
+
+      totalDisplay.textContent = total;
+      totalInput.value = total;
+    }
+
+    bayar.oninput = function () {
+      const total = Number(totalInput.value);
+      const bayarVal = Number(bayar.value);
+
+      kembalian.value = bayarVal - total;
+    };
+  </script>
+
+</body>
+</html>

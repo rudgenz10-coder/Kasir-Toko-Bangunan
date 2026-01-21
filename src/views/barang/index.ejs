@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link href="/css/output.css" rel="stylesheet">
+</head>
+
+<body class="p-6 bg-gray-100">
+
+  <div class="max-w-6xl mx-auto bg-white p-6 rounded shadow">
+
+    <div class="flex justify-between mb-4">
+      <h1 class="text-2xl font-bold">Data Barang</h1>
+      <a href="/barang/create" class="px-4 py-2 bg-blue-600 text-white rounded">+ Tambah</a>
+    </div>
+
+    <table class="w-full border">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="p-2 border">Kode</th>
+          <th class="p-2 border">Nama</th>
+          <th class="p-2 border">Jenis</th>
+          <th class="p-2 border">Harga</th>
+
+          <!-- BEDANYA:
+               Ambil nama pemasok -->
+          <th class="p-2 border">Pemasok</th>
+
+          <th class="p-2 border">Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% barang.forEach(b => { %>
+          <tr class="border">
+            <td class="p-2 border"><%= b.kode %></td>
+            <td class="p-2 border"><%= b.nama_barang %></td>
+            <td class="p-2 border"><%= b.jenis_barang %></td>
+            <td class="p-2 border"><%= b.harga_barang %></td>
+
+            <!-- BEDANYA:
+                 Show nama pemasok -->
+            <td class="p-2 border"><%= b.pemasok.nama_supplier %></td>
+
+            <td class="p-2 border">
+              <a href="/barang/edit/<%= b.kode %>" class="text-blue-600">Edit</a> |
+              <a href="/barang/delete/<%= b.kode %>" onclick="return confirm('Yakin hapus?')" class="text-red-600">Hapus</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <div class="flex justify-between items-center mt-6">
+
+  <p class="text-sm text-gray-600">
+    Halaman <strong><%= currentPage %></strong> dari <strong><%= totalPage %></strong>
+  </p>
+
+  <div class="flex space-x-1">
+
+    <% if (currentPage > 1) { %>
+      <a href="?page=<%= currentPage - 1 %>"
+         class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100">
+        Prev
+      </a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPage; i++) { %>
+      <a href="?page=<%= i %>"
+         class="px-4 py-2 rounded-lg border
+         <%= i === currentPage
+            ? 'bg-blue-600 text-white border-blue-600'
+            : 'text-gray-600 hover:bg-gray-100' %>">
+        <%= i %>
+      </a>
+    <% } %>
+
+    <% if (currentPage < totalPage) { %>
+      <a href="?page=<%= currentPage + 1 %>"
+         class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100">
+        Next
+      </a>
+    <% } %>
+
+  </div>
+</div>
+
+
+  </div>
+
+</body>
+</html>

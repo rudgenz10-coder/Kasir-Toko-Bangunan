@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link href="/css/output.css" rel="stylesheet">
+</head>
+
+<body class="p-6 bg-gray-100">
+
+  <div class="max-w-lg mx-auto bg-white p-6 rounded shadow">
+
+    <h1 class="text-2xl font-bold mb-4"><%= title %></h1>
+
+    <form action="<%= action %>" method="POST" class="space-y-4">
+
+      <input 
+        name="kode"
+        value="<%= barang.kode || '' %>"
+        class="w-full p-2 border rounded"
+        placeholder="Kode Barang"
+        required
+      >
+
+      <input 
+        name="nama_barang"
+        value="<%= barang.nama_barang || '' %>"
+        class="w-full p-2 border rounded"
+        placeholder="Nama Barang"
+        required
+      >
+
+      <input 
+        name="jenis_barang"
+        value="<%= barang.jenis_barang || '' %>"
+        class="w-full p-2 border rounded"
+        placeholder="Jenis Barang"
+        required
+      >
+
+      <input 
+        name="satuan_barang"
+        value="<%= barang.satuan_barang || '' %>"
+        class="w-full p-2 border rounded"
+        placeholder="Satuan (pcs, kg, dll)"
+        required
+      >
+
+      <input 
+        name="harga_barang"
+        value="<%= barang.harga_barang || '' %>"
+        class="w-full p-2 border rounded"
+        placeholder="Harga Jual"
+        required
+      >
+
+      <!-- PERBEDAAN PALING BESAR:
+           Dropdown Pemasok -->
+      <select 
+        name="id_pemasok" 
+        class="w-full p-2 border rounded"
+        required
+      >
+        <option value="">-- Pilih Pemasok --</option>
+
+        <% pemasok.forEach(p => { %>
+          <option 
+            value="<%= p.id %>"
+            <%= (barang.id_pemasok == p.id) ? 'selected' : '' %>
+          >
+            <%= p.nama_supplier %>
+          </option>
+        <% }) %>
+
+      </select>
+
+      <button class="w-full py-2 bg-blue-600 text-white rounded">
+        Simpan
+      </button>
+
+    </form>
+
+  </div>
+
+</body>
+</html>

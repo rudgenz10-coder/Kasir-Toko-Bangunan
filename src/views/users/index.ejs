@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link href="/css/output.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+
+    <div class="flex justify-between items-center mb-4">
+      <h1 class="text-2xl font-bold"><%= title %></h1>
+      <a href="/users/create" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+        + Tambah User
+      </a>
+    </div>
+
+    <table class="w-full border border-gray-300">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="border p-2 text-left">Username</th>
+          <th class="border p-2 text-left">Email</th>
+          <th class="border p-2 w-36 text-center">Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% if (users.length === 0) { %>
+          <tr>
+            <td colspan="3" class="border p-2 text-center text-gray-500">Belum ada data user</td>
+          </tr>
+        <% } %>
+
+        <% users.forEach(u => { %>
+          <tr class="hover:bg-gray-50">
+            <td class="border p-2"><%= u.username %></td>
+            <td class="border p-2"><%= u.email %></td>
+            <td class="border p-2 text-center space-x-1">
+              <a href="/users/edit/<%= u.id %>" 
+                 class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition">
+                Edit
+              </a>
+              <a href="/users/delete/<%= u.id %>" 
+                 class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
+                 onclick="return confirm('Yakin ingin menghapus user ini?')">
+                Hapus
+              </a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="flex justify-between items-center mt-6">
+      <p class="text-sm text-gray-600">
+        Halaman <strong><%= currentPage %></strong> dari <strong><%= totalPage %></strong>
+      </p>
+
+      <div class="flex space-x-1">
+        <% if (currentPage > 1) { %>
+          <a href="?page=<%= currentPage - 1 %>"
+             class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100">
+            Prev
+          </a>
+        <% } %>
+
+        <% for (let i = 1; i <= totalPage; i++) { %>
+          <a href="?page=<%= i %>"
+             class="px-4 py-2 rounded-lg border
+             <%= i === currentPage 
+                ? 'bg-blue-600 text-white border-blue-600' 
+                : 'text-gray-600 hover:bg-gray-100' %>">
+            <%= i %>
+          </a>
+        <% } %>
+
+        <% if (currentPage < totalPage) { %>
+          <a href="?page=<%= currentPage + 1 %>"
+             class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100">
+            Next
+          </a>
+        <% } %>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<div class="max-w-5xl w-full bg-white p-6 rounded shadow">
+
+      <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Data Pemasok</h1>
+        <a href="/pemasok/create" class="px-4 py-2 bg-blue-600 text-white rounded">+ Tambah</a>
+      </div>
+
+      <table class="w-full border">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="p-2 border">#</th>
+            <th class="p-2 border">Nama</th>
+            <th class="p-2 border">No Telp</th>
+            <th class="p-2 border">Alamat</th>
+            <th class="p-2 border">Keterangan</th>
+            <th class="p-2 border">Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% pemasok.forEach((p, i) => { %>
+            <tr class="border">
+              <td class="p-2 border"><%= i+1 %></td>
+              <td class="p-2 border"><%= p.nama_supplier %></td>
+              <td class="p-2 border"><%= p.no_telp %></td>
+              <td class="p-2 border"><%= p.alamat %></td>
+              <td class="p-2 border"><%= p.keterangan %></td>
+              <td class="p-2 border">
+                <a href="/pemasok/edit/<%= p.id %>" class="text-blue-600">Edit</a> |
+                <a href="/pemasok/delete/<%= p.id %>" onclick="return confirm('Hapus data?')" class="text-red-600">Hapus</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <div class="flex justify-between items-center mt-6">
+
+  <p class="text-sm text-gray-600">
+    Halaman <strong><%= page %></strong> dari <strong><%= totalPage %></strong>
+  </p>
+
+  <div class="flex space-x-1">
+
+    <% if (page > 1) { %>
+      <a href="?page=<%= page - 1 %>"
+         class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100">
+        Prev
+      </a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPage; i++) { %>
+      <a href="?page=<%= i %>"
+         class="px-4 py-2 rounded-lg border
+         <%= i === page ? 'bg-blue-600 text-white border-blue-600' : 'text-gray-600 hover:bg-gray-100' %>">
+        <%= i %>
+      </a>
+    <% } %>
+
+    <% if (page < totalPage) { %>
+      <a href="?page=<%= page + 1 %>"
+         class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100">
+        Next
+      </a>
+    <% } %>
+
+  </div>
+</div>
+
+
+    </div>

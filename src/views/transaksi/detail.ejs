@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= title %></title>
+  <link href="/css/output.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 p-6">
+
+  <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+
+    <h1 class="text-2xl font-bold mb-4"><%= title %></h1>
+
+    <!-- INFORMASI TRANSAKSI -->
+    <div class="mb-6">
+      <p><strong>ID Transaksi:</strong> <%= trx.id %></p>
+      <p><strong>Tanggal:</strong> <%= trx.tanggal.toLocaleString() %></p>
+      <p><strong>Total:</strong> Rp <%= trx.total.toLocaleString('id-ID') %></p>
+      <p><strong>Bayar:</strong> Rp <%= trx.bayar.toLocaleString('id-ID') %></p>
+      <p><strong>Kembalian:</strong> Rp <%= trx.kembalian.toLocaleString('id-ID') %></p>
+    </div>
+
+    <!-- TABEL BARANG YANG DIBELI -->
+    <table class="w-full border mb-4">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="p-2 border">Barang</th>
+          <th class="p-2 border">Harga</th>
+          <th class="p-2 border">Jumlah</th>
+          <th class="p-2 border">Subtotal</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% trx.detail.forEach(d => { %>
+          <tr>
+            <td class="border p-2"><%= d.barang.nama_barang.toLocaleString('id-ID') %></td>
+            <td class="border p-2">Rp <%= d.harga.toLocaleString('id-ID') %></td>
+            <td class="border p-2"><%= d.jumlah.toLocaleString('id-ID') %></td>
+            <td class="border p-2">Rp <%= d.subtotal.toLocaleString('id-ID') %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <a href="/transaksi" class="px-4 py-2 bg-gray-700 text-white rounded">
+      Kembali
+    </a>
+
+  </div>
+
+</body>
+</html>

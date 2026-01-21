@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link href="/css/output.css" rel="stylesheet">
+</head>
+
+<body class="p-6 bg-gray-100">
+
+  <div class="max-w-lg mx-auto bg-white p-6 rounded shadow">
+
+    <h1 class="text-2xl font-bold mb-4"><%= title %></h1>
+
+    <form action="<%= action %>" method="POST" class="space-y-4">
+
+      <!-- PILIH BARANG -->
+      <select name="kode_barang" class="w-full p-2 border rounded" required>
+        <option value="">-- Pilih Barang --</option>
+        <% barang.forEach(b => { %>
+          <option value="<%= b.kode %>"><%= b.nama_barang %></option>
+        <% }) %>
+      </select>
+
+      <!-- PILIH PEMASOK -->
+      <select name="id_pemasok" class="w-full p-2 border rounded" required>
+        <option value="">-- Pilih Pemasok --</option>
+        <% pemasok.forEach(p => { %>
+          <option value="<%= p.id %>"><%= p.nama_supplier %></option>
+        <% }) %>
+      </select>
+
+      <input name="tanggal_masuk" type="date" class="w-full p-2 border rounded" required>
+
+      <input name="harga_beli" type="number" class="w-full p-2 border rounded" placeholder="Harga Beli" required>
+
+      <input name="jumlah_masuk" type="number" class="w-full p-2 border rounded" placeholder="Jumlah Masuk" required>
+
+      <button class="w-full py-2 bg-blue-600 text-white rounded">Simpan</button>
+    </form>
+
+  </div>
+
+</body>
+</html>
