@@ -3,29 +3,15 @@ import Pemasok from "../models/Pemasok.js"
 
 export default {
     async index(req, res) {
-  const limit = 10; // jumlah barang per halaman
-  const page = parseInt(req.query.page) || 1;
-  const offset = (page - 1) * limit;
-
-  const { count, rows: barang } = await Barang.findAndCountAll({
-    include: {
-      model: Pemasok,
-      as: 'pemasok'
-    },
-    order: [['kode', 'ASC']],
-    limit,
-    offset
-  });
-
-  const totalPage = Math.ceil(count / limit);
-
-  res.render('barang/index', {
-    title: 'Data Barang',
-    barang,
-    currentPage: page,
-    totalPage
-  });
-},
+        const barang = await Barang.findAll({ include: {
+            model: Pemasok, 
+            as: 'pemasok' 
+        }, order: [['kode', 'ASC']] });
+        res.render('barang/index', {
+            title: 'data barang',
+            barang
+        });
+    }, 
 
     async create(req, res) {
         const pemasok =await Pemasok.findAll();

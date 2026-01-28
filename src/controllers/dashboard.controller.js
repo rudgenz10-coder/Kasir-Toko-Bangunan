@@ -1,5 +1,9 @@
 import { Sequelize } from "sequelize";
-import { Barang, Pemasok, Stok, Transaksi, User} from "../models/index.js"
+import Barang from "../models/Barang.js";
+import Pemasok from "../models/Pemasok.js";
+import Stok from "../models/Stok.js";
+import Transaksi from "../models/Transaksi.js";
+import User from "../models/User.js";
 
 export default {
   async index(req, res) {

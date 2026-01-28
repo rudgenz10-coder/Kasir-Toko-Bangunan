@@ -1,4 +1,8 @@
-import { Barang, Pemasok, Stok, Transaksi, Penjualan } from "./index.js"
+import Barang from '../models/Barang.js';
+import Pemasok from '../models/Pemasok.js'; 
+import Stok from '../models/Stok.js'
+import Transaksi from '../models/Transaksi.js';
+import Penjualan from '../models/Penjualan.js';
 
 export default function applyAssociations() {
     Pemasok.hasMany(Barang, { 

@@ -4,12 +4,10 @@ import { isLogin } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.use(isLogin);
-
-router.get("/", trx.index);
-router.get("/create", trx.create);
-router.post("/store", trx.store);
-router.get("/detail/:id", trx.detail);
+router.get("/", isLogin, trx.index);
+router.get("/create", isLogin, trx.create);
+router.post("/store", isLogin, trx.store);
+router.get("/detail/:id", isLogin, trx.detail);
 
 
 

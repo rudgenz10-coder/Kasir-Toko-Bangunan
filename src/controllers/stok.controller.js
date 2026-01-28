@@ -4,30 +4,23 @@ import Pemasok from '../models/Pemasok.js';
 
 export default {
     async index(req, res) {
-  const limit = 10; // jumlah stok per halaman
-  const page = parseInt(req.query.page) || 1;
-  const offset = (page - 1) * limit;
+         const stok = await Stok.findAll({
+            include: [
+                {
+                    model: Barang, as: 'barang'
+                },
+                {
+                    model: Pemasok, as: 'pemasok'
+                }
+            ],
+            order: [['id', 'ASC']]
+         });
 
-  const { count, rows: stok } = await Stok.findAndCountAll({
-    include: [
-      { model: Barang, as: 'barang' },
-      { model: Pemasok, as: 'pemasok' }
-    ],
-    order: [['id', 'ASC']],
-    limit,
-    offset
-  });
-
-  const totalPage = Math.ceil(count / limit);
-
-  res.render('stok/index', {
-    title: 'Data Stok',
-    stok,
-    currentPage: page,
-    totalPage
-  });
-}
-,
+         res.render('stok/index', {
+            title: 'Data Stok',
+            stok
+         });
+    },
     async create(req, res) {
         const barang = await Barang.findAll();
         const pemasok = await Pemasok.findAll();

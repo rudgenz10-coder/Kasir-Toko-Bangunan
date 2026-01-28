@@ -4,8 +4,6 @@ import { isLogin } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.use(isLogin);
-
-router.get("/", DashboardController.index);
+router.get("/", isLogin, DashboardController.index);
 
 export default router;

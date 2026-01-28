@@ -27,7 +27,7 @@ export default {
   });
 }, 
 
-  async create(req, res) {
+    async create(req, res) {
   const barang = await Barang.findAll();
 
   res.render("transaksi/form", {
@@ -36,7 +36,7 @@ export default {
   });
 }, 
 
-  async store(req, res) {
+    async store(req, res) {
   try {
     const { total, bayar, kembalian } = req.body;
 

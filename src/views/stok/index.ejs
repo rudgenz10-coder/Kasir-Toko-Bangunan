@@ -19,7 +19,6 @@
         <tr>
           <th class="p-2 border">Barang</th>
           <th class="p-2 border">Pemasok</th>
-          <th class="p-2 border">Harga Beli</th>
           <th class="p-2 border">Jumlah</th>
           <th class="p-2 border">Tanggal</th>
         </tr>
@@ -30,7 +29,6 @@
           <tr class="border">
             <td class="p-2 border"><%= s.barang.nama_barang %></td>
             <td class="p-2 border"><%= s.pemasok.nama_supplier %></td>
-            <td class="p-2 border"><%= s.harga_beli %></td>
             <td class="p-2 border"><%= s.jumlah_masuk %></td>
             <td class="p-2 border"><%= s.tanggal_masuk %></td>
           </tr>
@@ -38,42 +36,6 @@
       </tbody>
 
     </table>
-
-    <div class="flex justify-between items-center mt-6">
-
-  <p class="text-sm text-gray-600">
-    Halaman <strong><%= currentPage %></strong> dari <strong><%= totalPage %></strong>
-  </p>
-
-  <div class="flex space-x-1">
-
-    <% if (currentPage > 1) { %>
-      <a href="?page=<%= currentPage - 1 %>"
-         class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100">
-        Prev
-      </a>
-    <% } %>
-
-    <% for (let i = 1; i <= totalPage; i++) { %>
-      <a href="?page=<%= i %>"
-         class="px-4 py-2 rounded-lg border
-         <%= i === currentPage
-            ? 'bg-blue-600 text-white border-blue-600'
-            : 'text-gray-600 hover:bg-gray-100' %>">
-        <%= i %>
-      </a>
-    <% } %>
-
-    <% if (currentPage < totalPage) { %>
-      <a href="?page=<%= currentPage + 1 %>"
-         class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100">
-        Next
-      </a>
-    <% } %>
-
-  </div>
-</div>
-
   </div>
 
 </body>

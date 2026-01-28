@@ -4,13 +4,11 @@ import { isLogin } from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.use(isLogin);
-
-router.get('/', barangController.index);
-router.get('/create', barangController.create);
-router.post('/store', barangController.store);
-router.get('/edit/:kode', barangController.edit);
-router.post('/update/:kode', barangController.update);
-router.get('/delete/:kode', barangController.delete);
+router.get('/', isLogin, barangController.index);
+router.get('/create', isLogin, barangController.create);
+router.post('/store', isLogin, barangController.store);
+router.get('/edit/:kode', isLogin, barangController.edit);
+router.post('/update/:kode', isLogin, barangController.update);
+router.get('/delete/:kode', isLogin, barangController.delete);
 
 export default router;

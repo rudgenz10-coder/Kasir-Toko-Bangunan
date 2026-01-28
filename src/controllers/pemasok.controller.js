@@ -1,24 +1,11 @@
-import { Pemasok } from "../models/index.js"
+import Pemasok from "../models/Pemasok.js"
 
 export default {
     async index(req, res) {
-
-        const limit = 10;
-        const page = parseInt(req.query.page) || 1;
-        const offset = (page - 1) * limit;
-
-        const {count, rows: pemasok} = await Pemasok.findAndCountAll({
-            limit,
-            offset,
-            order: [['id', 'DESC']]
-        });
-
-        const totalPage = Math.ceil(count / limit);
+        const pemasok = await Pemasok.findAll();
         res.render('pemasok/index', {
             title: 'Data Pemasok',
-            pemasok,
-            page,
-            totalPage
+            pemasok
         });
     },
 

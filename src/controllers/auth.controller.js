@@ -8,7 +8,7 @@ export default {
 
     async login(req, res) {
         console.log("REQ BODY:", req.body);
-        console.log("EMAIL:", req.body.email);
+console.log("EMAIL:", req.body.email);
 
         const { email, password } = req.body;
         const user = await User.findOne({ where: {email}});

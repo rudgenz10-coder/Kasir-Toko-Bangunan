@@ -51,42 +51,6 @@
       </tbody>
     </table>
 
-    <div class="flex justify-between items-center mt-6">
-
-  <p class="text-sm text-gray-600">
-    Halaman <strong><%= currentPage %></strong> dari <strong><%= totalPage %></strong>
-  </p>
-
-  <div class="flex space-x-1">
-
-    <% if (currentPage > 1) { %>
-      <a href="?page=<%= currentPage - 1 %>"
-         class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100">
-        Prev
-      </a>
-    <% } %>
-
-    <% for (let i = 1; i <= totalPage; i++) { %>
-      <a href="?page=<%= i %>"
-         class="px-4 py-2 rounded-lg border
-         <%= i === currentPage
-            ? 'bg-blue-600 text-white border-blue-600'
-            : 'text-gray-600 hover:bg-gray-100' %>">
-        <%= i %>
-      </a>
-    <% } %>
-
-    <% if (currentPage < totalPage) { %>
-      <a href="?page=<%= currentPage + 1 %>"
-         class="px-4 py-2 border rounded-lg text-gray-600 hover:bg-gray-100">
-        Next
-      </a>
-    <% } %>
-
-  </div>
-</div>
-
-
   </div>
 
 </body>

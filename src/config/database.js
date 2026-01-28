@@ -9,8 +9,16 @@ const db = new Sequelize(
   process.env.DB_PASS,
     {
         host: process.env.DB_HOST,  
+        port: process.env.DB_PORT || 4000,
         dialect: "mysql",
-    }
+        dialectOptions: {
+            ssl: {
+                // WAJIB: TiDB Cloud menolak koneksi tanpa SSL
+                rejectUnauthorized: true,
+            },
+        }
+    },
+    
 );
 
 (async () => {
